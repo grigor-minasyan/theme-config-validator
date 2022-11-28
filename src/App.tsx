@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import zodToJsonSchema from "zod-to-json-schema";
 
 const Sizing = z.object({
   desktop: z.object({ width: z.number(), height: z.number() }),
@@ -115,7 +116,12 @@ function App() {
     "hum_nutrition",
   ]);
   const [themeConfigs, setThemeConfigs] = useState<Record<string, object>>({});
-
+  const jsonSchema = JSON.stringify(
+    zodToJsonSchema(ThemeConfig, "ThemeConfigSchema").definitions
+      .ThemeConfigSchema,
+    null,
+    8
+  );
   useEffect(() => {
     (async () => {
       for (const widgetId of widgetIds) {
@@ -165,6 +171,9 @@ function App() {
           </div>
         );
       })}
+
+      <h1>Here is the schema used</h1>
+      <p style={{ whiteSpace: "pre" }}>{jsonSchema}</p>
     </div>
   );
 }
