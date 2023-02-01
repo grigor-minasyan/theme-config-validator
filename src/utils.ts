@@ -14,130 +14,138 @@ const Color = z
   .string()
   .regex(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^\)]*\)/i);
 
-export const ThemeConfig = z.object({
-  isDefault: z.boolean().optional(),
-  fonts: z
-    .object({
-      primaryFontUrl: z.string(),
-      boldFontUrl: z.string(),
-      defaultFontUrl: z.string(),
-    })
-    .strict(),
-  images: z
-    .object({
-      loadingImage: z.string(),
-      heroBanner: z.string(),
-      unexpectedErrorIcon: z.string(),
-      sessionTimeoutIcon: z.string(),
-      macroArticleIcon: z.string(),
-      tooltip: z.string().optional(),
-    })
-    .strict(),
-  colors: z
-    .object({
-      primary: Color,
-      secondary: Color,
-      background: z
-        .object({
-          main: Color,
-          light: Color,
-          accent: Color,
-          header: Color,
-          disabled: Color,
-          element: Color,
-        })
-        .strict(),
-      hoverBackground: z
-        .object({
-          primaryHover: Color,
-          secondaryHover: Color,
-          accentHover: Color,
-        })
-        .strict(),
-      messageBackgrounds: z
-        .object({
-          outbound: Color,
-          inbound: Color,
-        })
-        .strict(),
-      text: z
-        .object({
-          primaryLight: Color,
-          secondaryLight: Color,
-          primaryDark: Color,
-          secondaryDark: Color,
-          disabled: Color,
-          buttonRegular: Color,
-          buttonHover: Color,
-          error: Color,
-        })
-        .strict(),
-      border: z
-        .object({
-          default: Color,
-          dividerOnDark: Color,
-          active: Color,
-          error: Color,
-          disabled: Color,
-        })
-        .strict(),
-      controls: z
-        .object({
-          uncheckedControl: Color,
-          inboundChecked: Color,
-          outboundChecked: Color,
-          disabledControl: Color,
-        })
-        .strict(),
-      launcher: z
-        .object({
-          background: Color.optional(),
-          hoverBackground: Color.optional(),
-        })
-        .strict()
-        .optional(),
-      link: z
-        .object({
-          inboundDefaultLink: Color,
-          inboundDisabledLink: Color,
-          inboundHoverLink: Color,
-          outboundDefaultLink: Color,
-          outboundDisabledLink: Color,
-          outboundHoverLink: Color,
-        })
-        .strict(),
-      ratingIcon: z
-        .object({
-          INBOUND: Color,
-          OUTBOUND: Color,
-        })
-        .strict(),
-      boxShadow: Color,
-    })
-    .strict(),
-  text: z
-    .object({
-      partnerFriendlyName: z.string(),
-      uppercaseButtonText: z.boolean(),
-      routeToAgentMessage: z.string().optional(),
-    })
-    .strict(),
-  launcher: z
-    .object({
-      initializeFromLauncher: z.boolean(),
-      imageSrc: z.string(),
-      position: Position.optional(),
-      sizing: Sizing,
-    })
-    .strict(),
-  mainWidget: z
-    .object({
-      position: Position,
-      sizing: Sizing.optional(),
-    })
-    .strict()
-    .optional(),
-});
+const URL = z
+  .string()
+  .regex(
+    /https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/i
+  );
+
+export const ThemeConfig = z
+  .object({
+    isDefault: z.boolean().optional(),
+    fonts: z
+      .object({
+        primaryFontUrl: URL,
+        boldFontUrl: URL,
+        defaultFontUrl: URL,
+      })
+      .strict(),
+    images: z
+      .object({
+        loadingImage: URL,
+        heroBanner: URL,
+        unexpectedErrorIcon: URL,
+        sessionTimeoutIcon: URL,
+        macroArticleIcon: URL,
+        tooltip: URL.optional(),
+      })
+      .strict(),
+    colors: z
+      .object({
+        primary: Color,
+        secondary: Color,
+        background: z
+          .object({
+            main: Color,
+            light: Color,
+            accent: Color,
+            header: Color,
+            disabled: Color,
+            element: Color,
+          })
+          .strict(),
+        hoverBackground: z
+          .object({
+            primaryHover: Color,
+            secondaryHover: Color,
+            accentHover: Color,
+          })
+          .strict(),
+        messageBackgrounds: z
+          .object({
+            outbound: Color,
+            inbound: Color,
+          })
+          .strict(),
+        text: z
+          .object({
+            primaryLight: Color,
+            secondaryLight: Color,
+            primaryDark: Color,
+            secondaryDark: Color,
+            disabled: Color,
+            buttonRegular: Color,
+            buttonHover: Color,
+            error: Color,
+          })
+          .strict(),
+        border: z
+          .object({
+            default: Color,
+            dividerOnDark: Color,
+            active: Color,
+            error: Color,
+            disabled: Color,
+          })
+          .strict(),
+        controls: z
+          .object({
+            uncheckedControl: Color,
+            inboundChecked: Color,
+            outboundChecked: Color,
+            disabledControl: Color,
+          })
+          .strict(),
+        launcher: z
+          .object({
+            background: Color.optional(),
+            hoverBackground: Color.optional(),
+          })
+          .strict()
+          .optional(),
+        link: z
+          .object({
+            inboundDefaultLink: Color,
+            inboundDisabledLink: Color,
+            inboundHoverLink: Color,
+            outboundDefaultLink: Color,
+            outboundDisabledLink: Color,
+            outboundHoverLink: Color,
+          })
+          .strict(),
+        ratingIcon: z
+          .object({
+            INBOUND: Color,
+            OUTBOUND: Color,
+          })
+          .strict(),
+        boxShadow: Color,
+      })
+      .strict(),
+    text: z
+      .object({
+        partnerFriendlyName: z.string(),
+        uppercaseButtonText: z.boolean(),
+        routeToAgentMessage: z.string().optional(),
+      })
+      .strict(),
+    launcher: z
+      .object({
+        initializeFromLauncher: z.boolean(),
+        imageSrc: URL,
+        position: Position.optional(),
+        sizing: Sizing,
+      })
+      .strict(),
+    mainWidget: z
+      .object({
+        position: Position,
+        sizing: Sizing.optional(),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
 
 export const zErrorFormatter = (
   error: ZodFormattedError<z.infer<typeof ThemeConfig>>,

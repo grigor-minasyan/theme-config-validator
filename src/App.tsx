@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import Editor, { type OnChange } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import { initialThemeConfigStr, ThemeConfig, zErrorFormatter } from "./utils";
+import { ThemeConfig, zErrorFormatter } from "./utils";
+import { useBearStore } from "./store";
 
 function App() {
+  const { themeConfigStr, setThemeConfigStr } = useBearStore((state) => state);
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [errors, setErrors] = useState("Edit to see if there are any errors");
   const [find, setFind] = useState("");
@@ -49,6 +51,7 @@ function App() {
       setErrors("no value was provided");
       return;
     }
+    setThemeConfigStr(value);
     let themeConfigParsed;
     try {
       themeConfigParsed = JSON.parse(value);
@@ -68,11 +71,25 @@ function App() {
         height="95vh"
         width="50vw"
         defaultLanguage="json"
-        defaultValue={initialThemeConfigStr}
+        defaultValue={themeConfigStr}
         onChange={handleEditorChange}
         onMount={(editor, monaco) => (editorRef.current = editor)}
       />
       <div style={{ display: "flex", flexDirection: "column" }}>
+        <h1>Quick theme config validator for Simplr</h1>
+        <p>
+          Until the real one comes. This will also save the file locally
+          whenever you edit, so refreshing won't delete any edits.
+        </p>
+        <p>
+          Initially get it to a valid json state, then you can use the format
+          button to make it cleaner. It will show all the errors below, which
+          keys are missing any values, or are invalid.
+        </p>
+        <p>
+          If you see that a key is Required, just add that key with {"{}"}{" "}
+          value, then it will show what is missing inside that key.
+        </p>
         <div style={{ display: "flex" }}>
           <input placeholder="Quick find" onChange={handleFindChange}></input>
           <input
