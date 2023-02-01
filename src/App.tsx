@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import Editor, { type OnChange } from "@monaco-editor/react";
+import { useEffect, useRef, useState } from "react";
+import Editor from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import { ThemeConfig, zErrorFormatter } from "./utils";
 import { useBearStore } from "./store";
@@ -20,14 +20,12 @@ function App() {
   };
 
   const handleFindAndReplace = () => {
-    if (editorRef.current) {
-      editorRef.current
-        .getModel()
-        ?.setValue(
-          editorRef.current?.getModel()?.getValue().replaceAll(find, replace) ||
-            ""
-        );
-    }
+    editorRef.current
+      ?.getModel()
+      ?.setValue(
+        editorRef.current?.getModel()?.getValue().replaceAll(find, replace) ||
+          ""
+      );
   };
 
   const handleFormat = () => {
@@ -46,7 +44,7 @@ function App() {
     }
   };
 
-  const handleEditorChange: OnChange = (value, event) => {
+  const handleEditorChange = (value?: string) => {
     if (!value) {
       setErrors("no value was provided");
       return;
@@ -65,6 +63,8 @@ function App() {
     }
   };
 
+  useEffect(() => handleEditorChange(themeConfigStr), []);
+
   return (
     <div style={{ display: "flex" }}>
       <Editor
@@ -72,7 +72,7 @@ function App() {
         width="50vw"
         defaultLanguage="json"
         defaultValue={themeConfigStr}
-        onChange={handleEditorChange}
+        onChange={(v) => handleEditorChange(v)}
         onMount={(editor, monaco) => (editorRef.current = editor)}
       />
       <div style={{ display: "flex", flexDirection: "column" }}>
