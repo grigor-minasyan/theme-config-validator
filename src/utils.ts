@@ -147,8 +147,15 @@ export const zErrorFormatter = (
 ) => {
   Object.entries(error).forEach(([key, val]) => {
     if (key === "_errors") {
-      // @ts-expect-error
-      finalStrs.push("----".repeat(depth) + " " + curKey + " | " + val[0]);
+      finalStrs.push(
+        // @ts-expect-error
+        "       ".repeat(depth) +
+          " " +
+          curKey +
+          " -- " +
+          // @ts-expect-error
+          (val.join(", ") || "No error")
+      );
     } else {
       // @ts-expect-error
       zErrorFormatter(error[key], depth + 1, finalStrs, key);

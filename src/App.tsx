@@ -80,8 +80,10 @@ function App() {
             onChange={handleReplaceChange}
           ></input>
           <button onClick={handleFindAndReplace}>Find and replace</button>
-          <button onClick={handleFormat}>Format if valid json</button>
         </div>
+        <br />
+        <button onClick={handleFormat}>Format if valid json</button>
+        <h2>Errors</h2>
         <div style={{ whiteSpace: "pre" }}>{errors}</div>
       </div>
     </div>
