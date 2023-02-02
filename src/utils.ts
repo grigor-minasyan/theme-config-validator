@@ -12,7 +12,7 @@ const Position = z.object({
 
 const Color = z
   .string()
-  .regex(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^\)]*\)/i);
+  .regex(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})$|(?:rgb|hsl)a?\([^\)]*\)$/i);
 
 const URL = z
   .string()
