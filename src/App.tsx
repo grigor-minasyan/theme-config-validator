@@ -62,8 +62,28 @@ function App() {
       setErrors(zErrorFormatter(zResults.error.format()));
     }
   };
+  const handleConfigLinkSave = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("urlConfig", themeConfigStr);
+    // @ts-expect-error
+    window.location.search = urlParams;
+  };
 
-  useEffect(() => handleEditorChange(themeConfigStr), []);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentUrlVal = urlParams.get("urlConfig");
+
+    let foundValidJson = false;
+    try {
+      JSON.parse(currentUrlVal || "");
+      foundValidJson = true;
+    } catch (e) {}
+    foundValidJson && currentUrlVal && setThemeConfigStr(currentUrlVal);
+
+    handleEditorChange(
+      foundValidJson && currentUrlVal ? currentUrlVal : themeConfigStr
+    );
+  }, []);
 
   return (
     <div style={{ display: "flex" }}>
@@ -100,6 +120,9 @@ function App() {
         </div>
         <br />
         <button onClick={handleFormat}>Format if valid json</button>
+        <button onClick={handleConfigLinkSave}>
+          Save config to the link for sharing
+        </button>
         <h2>Errors</h2>
         <div style={{ whiteSpace: "pre" }}>{errors}</div>
       </div>
