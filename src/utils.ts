@@ -162,7 +162,7 @@ export const zErrorFormatter = (
           curKey +
           " -- " +
           // @ts-expect-error
-          (val.join(", ") || "No error")
+          (val.join(", ") || "✅")
       );
     } else {
       // @ts-expect-error
@@ -245,9 +245,9 @@ export const initialThemeConfigStr = `colors: {
   },
 
 
- link: {       inboundDefaultLink: '#FFFFFF',       outboundDefaultLink: '#3115F2’,
-    inboundHoverLink: '#FFFFFF',       outboundHoverLink: '#21137A’,
-    inboundDisabledLink: '#FFFFFF (56%)’,       outboundDisabledLink: '#5C5C5C’,
+ link: {      inboundDefaultLink: '#FFFFFF',      outboundDefaultLink: '#3115F2’,
+    inboundHoverLink: '#FFFFFF',      outboundHoverLink: '#21137A’,
+    inboundDisabledLink: '#FFFFFF (56%)’,      outboundDisabledLink: '#5C5C5C’,
   },
 
 
