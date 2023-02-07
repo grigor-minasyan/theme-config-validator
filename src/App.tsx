@@ -58,9 +58,11 @@ function App() {
       return;
     }
     const zResults = ThemeConfig.safeParse(themeConfigParsed);
-    if (!zResults.success) {
-      setErrors(zErrorFormatter(zResults.error.format()));
-    }
+    setErrors(
+      zResults.success
+        ? "✅ No Errors found, great!"
+        : zErrorFormatter(zResults.error.format())
+    );
   };
   const handleConfigLinkSave = () => {
     const urlParams = new URLSearchParams(window.location.search);
