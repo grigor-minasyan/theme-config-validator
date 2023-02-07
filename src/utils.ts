@@ -27,7 +27,6 @@ export const ThemeConfig = z
       .object({
         primaryFontUrl: URL,
         boldFontUrl: URL,
-        defaultFontUrl: URL,
       })
       .strict(),
     images: z
@@ -119,12 +118,12 @@ export const ThemeConfig = z
             OUTBOUND: Color,
           })
           .strict(),
-        boxShadow: Color,
+        boxShadow: z.string(),
       })
       .strict(),
     text: z
       .object({
-        partnerFriendlyName: z.string(),
+        partnerFriendlyName: z.string().optional(),
         uppercaseButtonText: z.boolean(),
         routeToAgentMessage: z.string().optional(),
       })
@@ -132,9 +131,8 @@ export const ThemeConfig = z
     launcher: z
       .object({
         initializeFromLauncher: z.boolean(),
-        imageSrc: URL,
         position: Position.optional(),
-        sizing: Sizing,
+        sizing: Sizing.optional(),
       })
       .strict(),
     mainWidget: z
@@ -239,7 +237,6 @@ export const initialThemeConfigStr = `colors: {
   launcher: {
     background: ‘#60269E’,
     hoverBackground: ‘#7947AD’,
-    imageSrc: ,
     initializeFromLauncher: true,
     boxShadow: '0px 12px 16px 0px ##40166D (24%)',
   },
