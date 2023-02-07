@@ -65,8 +65,14 @@ function App() {
     );
   };
   const handleConfigLinkSave = () => {
+    try {
+      JSON.parse(themeConfigStr);
+    } catch (e) {
+      alert("Sorry but the JSON is not valid for sharing");
+      return;
+    }
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("urlConfig", themeConfigStr);
+    urlParams.set("urlConfig", JSON.stringify(JSON.parse(themeConfigStr)));
     // @ts-expect-error
     window.location.search = urlParams;
   };
@@ -74,16 +80,21 @@ function App() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const currentUrlVal = urlParams.get("urlConfig");
+    let formattedUrlVal = "";
 
     let foundValidJson = false;
     try {
-      JSON.parse(currentUrlVal || "");
+      formattedUrlVal = JSON.stringify(
+        JSON.parse(currentUrlVal || ""),
+        null,
+        2
+      );
       foundValidJson = true;
     } catch (e) {}
-    foundValidJson && currentUrlVal && setThemeConfigStr(currentUrlVal);
+    foundValidJson && currentUrlVal && setThemeConfigStr(formattedUrlVal);
 
     handleEditorChange(
-      foundValidJson && currentUrlVal ? currentUrlVal : themeConfigStr
+      foundValidJson && currentUrlVal ? formattedUrlVal : themeConfigStr
     );
   }, []);
 
