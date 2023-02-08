@@ -12,7 +12,12 @@ const Position = z.object({
 
 const Color = z
   .string()
-  .regex(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})$|(?:rgb|hsl)a?\([^\)]*\)$/i);
+  .regex(/^(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})$|^(?:rgb|hsl)a?\([^\)]*\)$/i);
+const ZBoxShadow = z
+  .string()
+  .regex(
+    /((\d){1,2}px ){4}((?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})$|(?:rgb|hsl)a?\([^\)]*\))$/i
+  );
 
 const URL = z
   .string()
@@ -118,7 +123,7 @@ export const ThemeConfig = z
             OUTBOUND: Color,
           })
           .strict(),
-        boxShadow: z.string(),
+        boxShadow: ZBoxShadow,
       })
       .strict(),
     text: z
