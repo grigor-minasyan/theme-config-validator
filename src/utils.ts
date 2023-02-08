@@ -128,7 +128,7 @@ export const ThemeConfig = z
       .strict(),
     text: z
       .object({
-        partnerFriendlyName: z.string().optional(),
+        partnerFriendlyName: z.string(),
         uppercaseButtonText: z.boolean(),
         routeToAgentMessage: z.string().optional(),
       })
